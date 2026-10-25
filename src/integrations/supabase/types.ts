@@ -21,6 +21,8 @@ export type Database = {
           id: string
           ip_address: string | null
           item_id: string
+          latitude: number | null
+          longitude: number | null
           opened_at: string
           region: string | null
           timezone: string | null
@@ -32,6 +34,8 @@ export type Database = {
           id?: string
           ip_address?: string | null
           item_id: string
+          latitude?: number | null
+          longitude?: number | null
           opened_at?: string
           region?: string | null
           timezone?: string | null
@@ -43,6 +47,8 @@ export type Database = {
           id?: string
           ip_address?: string | null
           item_id?: string
+          latitude?: number | null
+          longitude?: number | null
           opened_at?: string
           region?: string | null
           timezone?: string | null
