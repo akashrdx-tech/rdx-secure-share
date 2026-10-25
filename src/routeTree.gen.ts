@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VTokenRouteImport } from './routes/v.$token'
 import { Route as ApiPublicTrackRouteImport } from './routes/api/public/track'
 import { Route as ApiPublicUploadRouteImport } from './routes/api/public/upload'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VTokenRoute = VTokenRouteImport.update({
+  id: '/v/$token',
+  path: '/v/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicTrackRoute = ApiPublicTrackRouteImport.update({
@@ -31,30 +37,35 @@ const ApiPublicUploadRoute = ApiPublicUploadRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/v/$token': typeof VTokenRoute
   '/api/public/track': typeof ApiPublicTrackRoute
   '/api/public/upload': typeof ApiPublicUploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/v/$token': typeof VTokenRoute
   '/api/public/track': typeof ApiPublicTrackRoute
   '/api/public/upload': typeof ApiPublicUploadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/v/$token': typeof VTokenRoute
   '/api/public/track': typeof ApiPublicTrackRoute
   '/api/public/upload': typeof ApiPublicUploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/track' | '/api/public/upload'
+  fullPaths: '/' | '/v/$token' | '/api/public/track' | '/api/public/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/track' | '/api/public/upload'
-  id: '__root__' | '/' | '/api/public/track' | '/api/public/upload'
+  to: '/' | '/v/$token' | '/api/public/track' | '/api/public/upload'
+  id:
+    '__root__' | '/' | '/v/$token' | '/api/public/track' | '/api/public/upload'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  VTokenRoute: typeof VTokenRoute
   ApiPublicTrackRoute: typeof ApiPublicTrackRoute
   ApiPublicUploadRoute: typeof ApiPublicUploadRoute
 }
@@ -66,6 +77,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/v/$token': {
+      id: '/v/$token'
+      path: '/v/$token'
+      fullPath: '/v/$token'
+      preLoaderRoute: typeof VTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/track': {
@@ -87,6 +105,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  VTokenRoute: VTokenRoute,
   ApiPublicTrackRoute: ApiPublicTrackRoute,
   ApiPublicUploadRoute: ApiPublicUploadRoute,
 }
